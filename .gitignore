@@ -1,0 +1,22 @@
+node_modules/
+build/
+dist/
+dist-ssr/
+*.local
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Vercel
+.vercel
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project specific
+.github/workflows/static.yml_bak

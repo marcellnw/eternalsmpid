@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EternalSMP | Admin Portal v2.5.0</title>
+    <meta name="description" content="Official administration panel for the EternalSMP Feeloria Realm. Manage players, broadcasts, and system diagnostics.">
+    
+    <!-- Open Graph / Discord -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://paneldiscord-delta.vercel.app/">
+    <meta property="og:title" content="EternalSMP | Admin Portal">
+    <meta property="og:description" content="Broadcast high-priority notifications and manage the Feeloria realm in real-time.">
+    <meta property="og:image" content="https://github.com/marcellnw/paneleternalsmp/blob/main/1775664361126.png?raw=true">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Aggressively suppress noisy WebSocket errors and unhandled rejections in development
+      // These are benign side effects of HMR being disabled by the platform.
+      (() => {
+        const suppressPatterns = ['[vite]', 'WebSocket', 'socket', 'hmr', 'connection refused', 'failed to connect', 'close'];
+        
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        const originalLog = console.log;
+        
+        const shouldSuppress = (args) => {
+          const content = String(args[0] || '').toLowerCase();
+          return suppressPatterns.some(p => content.includes(p.toLowerCase()));
+        };
+
+        console.error = (...args) => {
+          if (shouldSuppress(args)) return;
+          originalError.apply(console, args);
+        };
+
+        console.warn = (...args) => {
+          if (shouldSuppress(args)) return;
+          originalWarn.apply(console, args);
+        };
+
+        console.log = (...args) => {
+          if (shouldSuppress(args)) return;
+          originalLog.apply(console, args);
+        };
+
+        window.addEventListener('unhandledrejection', (event) => {
+          const msg = (event.reason?.message || event.reason?.toString() || "").toLowerCase();
+          if (suppressPatterns.some(p => msg.includes(p.toLowerCase()))) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          }
+        }, true);
+
+        window.addEventListener('error', (event) => {
+          const msg = (event.message || "").toLowerCase();
+          if (suppressPatterns.some(p => msg.includes(p.toLowerCase()))) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          }
+        }, true);
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

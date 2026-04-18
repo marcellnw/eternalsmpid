@@ -1,0 +1,6 @@
+{
+  "name": "EternalSMP Dashboard",
+  "description": "Fantasy-themed webhook dashboard for EternalSMP server administration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
